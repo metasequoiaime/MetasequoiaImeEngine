@@ -899,7 +899,7 @@ pair<string, bool> DictionaryUlPb::build_sql(const string &sp_str, vector<string
     }
     else if (all_jp) // Segmentations are all jianpin
     {
-        sql = fmt::format(sql, table, "jp", sp_str, default_candicate_page_limit);
+        sql = fmt::format(base_sql, table, "jp", sp_str, default_candicate_page_limit);
     }
     else if (jp_cnt == 1) // Only one jianpin
     {
@@ -1038,7 +1038,9 @@ int DictionaryUlPb::insert_word_to_cached_buffer_series(const std::string &pinyi
                           .c_str());
     if (auto opt = _cached_buffer_series.get(pinyin))
     {
-        OutputDebugString(fmt::format(L"[msime]: fasjklfjsdalkjfklsdajklfjdsa").c_str());
+#ifdef FANY_DEBUG
+        OutputDebugString(fmt::format(L"[msime]: insert_word_to_cached_buffer_series").c_str());
+#endif
         auto list = opt.value();
         if (list.size() >= 1)
         {
